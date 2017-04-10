@@ -9,7 +9,7 @@ sys.path.append('python/abstract_classes')
 sys.path.append('python/implementations/nao_v4_naoqi2.1.4')
 
 from rapp_robot_api import RappRobot
-rh = RappRobot(ip = "192.168.0.245", port = "9559")
+rh = RappRobot(ip = "192.168.2.250", port = "9559")
 
 rh.audio.setVolume(50)
 rh.audio.speak("Hello")
