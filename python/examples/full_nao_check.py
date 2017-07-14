@@ -25,18 +25,18 @@ rh.audio.record('/home/nao/temp.ogg', 5)
 rh.audio.playFile('/home/nao/temp.ogg')
 
 rh.audio.speak('Testing speech detection for 5 seconds. The words are in and out')
-[r,e] = rh.audio.speechDetection(['in', 'out'], 5)
+[r,p,e] = rh.audio.speechDetection(['in', 'out'], 5).values()
 if r == None:
     rh.audio.speak('No words captured')
 else:
-    h.audio.speak('The word captured was ' + str(r[0]))
+    h.audio.speak('The word captured was ' + str(r))
 
 ###############################################################################
 
 rh.audio.speak('Testing set joint angles. The head should move')
 rh.motion.enableMotors()
 rh.humanoid_motion.setJointAngles(['HeadYaw'], [0.3], 0.5)
-[r,e] = rh.humanoid_motion.getJointAngles(['HeadYaw'])
+[r,e] = rh.humanoid_motion.getJointAngles(['HeadYaw']).values()
 rh.audio.speak('The head yaw is equal to ' + str(r[0]) + ' rads')
 rh.audio.speak('Testing opening and closing the hands')
 rh.humanoid_motion.openHand('Right')
@@ -45,17 +45,17 @@ rh.humanoid_motion.openHand('Left')
 rh.humanoid_motion.closeHand('Left')
 rh.audio.speak('Trying some postures')
 rh.humanoid_motion.goToPosture('Stand', 0.7)
-[r,e] = rh.humanoid_motion.getPosture()
+[e,r] = rh.humanoid_motion.getPosture().values()
 rh.audio.speak('The posture is ' + r)
 rh.humanoid_motion.goToPosture('Sit', 0.7)
-[r,e] = rh.humanoid_motion.getPosture()
+[e,r] = rh.humanoid_motion.getPosture().values()
 rh.audio.speak('The posture is ' + r)
 
 rh.humanoid_motion.goToPosture('Stand', 1.0)
 rh.audio.speak('Trying some movement. Moving sideways for 5 seconds')
 rh.motion.moveByVelocity(0.5, 0.5, 0)
 time.sleep(2.5)
-[r,e] = rh.motion.getVelocities()
+[r,e] = rh.motion.getVelocities().values()
 time.sleep(2.5)
 rh.motion.moveByVelocity(0, 0, 0)
 rh.audio.speak('During movement my velocities were ' + str(r[0]) + ' ' +\
@@ -68,13 +68,13 @@ rh.audio.speak('Motors are disabled')
 
 ###############################################################################
 
-[r,e] = rh.sensors.getBatteryLevels()
+[r,e] = rh.sensors.getBatteryLevels().values()
 rh.audio.speak('My battery level is ' + str(r) + ' %')
-[r,e] = rh.sensors.getSonarsMeasurements()
+[r,e] = rh.sensors.getSonarsMeasurements().values()
 rh.audio.speak('The sonars measurements are ' + str(r['front_left']) + ' meters and ' +\
         str(r['front_right']) + ' meters')
 rh.audio.speak('Trying the touch sensors for 10 seconds. Touch something')
-[r,e] = rh.sensors.getTactileMeasurements(10.0)
+[r,e] = rh.sensors.getTactileMeasurements(10.0).values()
 touched = ''
 for i in r.iterkeys():
     if r[i] > 0:
